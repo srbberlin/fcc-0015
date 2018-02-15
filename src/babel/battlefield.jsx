@@ -12,7 +12,6 @@ class BattleField extends React.Component {
     this.init = this.init.bind(this)
 
     this.state = {
-      //grid: this.init(),
       gridAttr: GameDisplay.gridAttr
     }
   }
