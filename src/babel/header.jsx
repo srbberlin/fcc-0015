@@ -8,7 +8,7 @@ class Header extends React.Component {
   render () {
     return (
       <h1>
-        Hello World { this.state.v }
+        The Dungeon Crawler Game { this.state.v }
       </h1>
     )
   }
