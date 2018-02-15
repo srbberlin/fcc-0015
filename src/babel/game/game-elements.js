@@ -1,4 +1,4 @@
-var GameElements = (
+let GameElements = (
   () => {
     let d = {
       levels: [
