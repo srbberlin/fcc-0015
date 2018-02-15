@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Cell extends React.Component {
   constructor (props) {
@@ -22,6 +23,13 @@ class Cell extends React.Component {
       </div>
     )
   }
+}
+
+Cell.propTypes = {
+  type: PropTypes.string,
+  style: PropTypes.string,
+  title: PropTypes.string,
+  id: PropTypes.string
 }
 
 export { Cell }
