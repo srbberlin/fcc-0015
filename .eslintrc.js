@@ -11,6 +11,14 @@ module.exports = {
         "commonjs": true,
         "es6": true
     },
+    "globals": {
+        "angular": true,
+        "React": true,
+        "ReactDom": true,
+        "d3": true,
+        "console.log": true,
+        "__dirname": true
+    },
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended"
