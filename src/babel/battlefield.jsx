@@ -2,18 +2,25 @@ import React from 'react'
 
 import { Header } from './header.jsx'
 import { Cell } from './cell.jsx'
-import { GameDisplay } from './game/game-display.js'
-
+import { GameDisplay, action } from './game/game-actions.js'
 
 class BattleField extends React.Component {
   constructor (props) {
     super(props)
 
     this.init = this.init.bind(this)
+    this.set = this.set.bind(this)
 
     this.state = {
-      gridAttr: GameDisplay.gridAttr
+      gridAttr: GameDisplay.gridAttr,
     }
+
+    action.setSet(this.set)
+  }
+
+  set (d) {
+    console.log('set', d)
+    this.setState(d)
   }
 
   init () {
@@ -40,15 +47,19 @@ class BattleField extends React.Component {
         else {
           if (t === 't-2') {
             s = {
-              backgroundColor: '#' + '6666'
+              backgroundColor: '#' + '666'
             }
           }
         }
         if (title){
-          rx.push(<Cell key={v} id={v} type={t} style={s} title={y1 + ',' + x1 + ',' + y2 + ',' + x2}/>)
+          rx.push(<Cell 
+            action={action}
+            key={v} id={v} type={t} style={s} title={y1 + ',' + x1 + ',' + y2 + ',' + x2}/>)
         }
         else {
-          rx.push(<Cell key={v} id={v} type={t} style={s}/>)
+          rx.push(<Cell 
+            action={action}
+            key={v} id={v} type={t} style={s}/>)
         }
         x++
       }
@@ -56,20 +67,23 @@ class BattleField extends React.Component {
       y++
     }
 
-    return ry
+    return ry // ????
   }
 
   componentWillMount () {
     this.setState({grid: this.init()})
+    document.addEventListener('keydown', action.key)
   }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', action.key)
+  }      
 
   render () {
     return (
-      <div>
+      <div className='container'>
         <Header />
-        <div className='battle-field'>
-          <div>{this.state.grid}</div>
-        </div>
+        <div className='battle-field'>{this.state.grid}</div>
       </div>
     )
   }

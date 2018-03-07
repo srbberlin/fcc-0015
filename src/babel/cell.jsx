@@ -8,7 +8,10 @@ class Cell extends React.Component {
     this.state = {
       type: this.props.type,
       style: this.props.style,
-      title: this.props.title
+      title: this.props.title,
+      action: this.props.action,
+      //click: this.props.action.click,
+      //eoutnter: this.props.action.out,
     }
   }
 
@@ -19,6 +22,9 @@ class Cell extends React.Component {
         className={'cell ' + this.state.type}
         style={this.state.style}
         title={this.state.title}
+        onMouseEnter={this.state.action.enter}
+        onClick={this.state.action.click}
+        onMouseOut={this.state.action.out}
       >
       </div>
     )
@@ -27,9 +33,12 @@ class Cell extends React.Component {
 
 Cell.propTypes = {
   type: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
   title: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  action: PropTypes.object,
+  //click: PropTypes.func,
+  //out: PropTypes.func,
 }
 
 export { Cell }
