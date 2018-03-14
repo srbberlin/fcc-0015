@@ -2,13 +2,13 @@ import { GameElements } from './game-elements.js'
 
 let d = GameElements.d // Fieldtypes
 let m = GameElements.m // Constructors
-let data = {
+let Entities = {
   players: [
-    m.player ('', 'me', 0, [], []),
-    m.player ('', 'enemy', 0, [], []),
-    m.player ('', 'enemy', 0, [], []),
-    m.player ('', 'enemy', 0, [], []),
-    m.player ('', 'boss', 0, [], [])
+    m.player ('hans', 'me', 0, [], []),
+    m.player ('paul panther', 'enemy', 0, [], []),
+    m.player ('sweet maries', 'enemy', 0, [], []),
+    m.player ('dark angel', 'enemy', 0, [], []),
+    m.player ('the majestic peace of', 'boss', 0, [], [])
   ] ,
   weapons: [
     m.weapon ('GameElements.weapons.w1', 0),
@@ -88,13 +88,13 @@ let newCoords = (y, x, ey, ex) => {
   return [ymin, xmin, ymax, xmax, y, x]
 }
 
-let NewGame = {
+let Pitch = {
   field: (() => {
 
-    let pc = 0, pcMax = data.players.length
-    let wc = 0, wcMax = data.weapons.length
-    let hc = 0, hcMax = data.healths.length
-    let y, y1, y2, ym, x, x1, x2, xm, o
+    let pc = 0, pcMax = Entities.players.length
+    let wc = 0, wcMax = Entities.weapons.length
+    let hc = 0, hcMax = Entities.healths.length
+    let y, y1, y2, ym, x, x1, x2, xm, o, title = ''
     let coords
 
     let f = [
@@ -119,24 +119,29 @@ let NewGame = {
      */
 
     do {
-      y = Math.abs(Math.floor(Math.random() * 94 + 3))
-      x = Math.abs(Math.floor(Math.random() * 94 + 3))
+      y = pc === 0 ? 0 : Math.abs(Math.floor(Math.random() * 94 + 3))
+      x = pc === 0 ? 0 : Math.abs(Math.floor(Math.random() * 94 + 3))
       if (pc < pcMax) {
-        o = data.players[pc++]
+        o = Entities.players[pc++]
         t = d.env[1].v
+        title = `player ${pc}`
       } else if (wc < wcMax) {
-        o = data.weapons[wc++]
+        o = Entities.weapons[wc++]
         t = d.env[1].v
+        title = `weapon ${wc}`
       } else if (hc < hcMax) {
-        o = data.healths[hc++]
+        o = Entities.healths[hc++]
         t = d.env[1].v
+        title = `healt ${hc}`
       }
       o.pos[0] = y
       o.pos[1] = x
       f[0][y][x][0] = t
       f[0][y][x][1] = o
+      f[0][y][x][2] = title
       f[1][y][x][0] = t
       f[1][y][x][1] = o
+      f[1][y][x][2] = title
 
     } while (hc < hcMax)
 
@@ -148,11 +153,11 @@ let NewGame = {
     pc = 0, wc = 0, hc = 0
     do {
       if (pc < pcMax) {
-        o = data.players[pc++]
+        o = Entities.players[pc++]
       } else if (wc < wcMax) {
-        o = data.weapons[wc++]
+        o = Entities.weapons[wc++]
       } else if (hc < hcMax) {
-        o = data.healths[hc++]
+        o = Entities.healths[hc++]
       }
 
       y = o.pos[0]
@@ -174,7 +179,7 @@ let NewGame = {
             f[1][y1][x1][0] = t
           }
           else {
-            f[0][y1][x1][2] = coords // Display
+            //f[0][y1][x1][2] = t//coords // Display
           }
           x1++
         }
@@ -293,4 +298,5 @@ let NewGame = {
   )()
 }
 
-export { NewGame }
+export { Pitch }
+export { Entities }

@@ -4,27 +4,19 @@ import PropTypes from 'prop-types'
 class Cell extends React.Component {
   constructor (props) {
     super (props)
-
-    this.state = {
-      type: this.props.type,
-      style: this.props.style,
-      title: this.props.title,
-      action: this.props.action,
-      //click: this.props.action.click,
-      //eoutnter: this.props.action.out,
-    }
   }
 
   render () {
+    if (this.props.flag !== undefined)
+      console.log('Cell render:', this.props.id)
     return (
       <div
         id={this.props.id}
-        className={'cell ' + this.state.type}
-        style={this.state.style}
-        title={this.state.title}
-        onMouseEnter={this.state.action.enter}
-        onClick={this.state.action.click}
-        onMouseOut={this.state.action.out}
+        className={'cell ' + this.props.type}
+        title={this.props.title}
+        onMouseEnter={this.props.action.enter}
+        onClick={this.props.action.click}
+        onMouseOut={this.props.action.out}
       >
       </div>
     )
@@ -32,13 +24,11 @@ class Cell extends React.Component {
 }
 
 Cell.propTypes = {
+  flag: PropTypes.number,
   type: PropTypes.string,
-  style: PropTypes.object,
   title: PropTypes.string,
   id: PropTypes.string,
   action: PropTypes.object,
-  //click: PropTypes.func,
-  //out: PropTypes.func,
 }
 
 export { Cell }

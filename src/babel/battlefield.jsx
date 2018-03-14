@@ -1,77 +1,48 @@
 import React from 'react'
 
 import { Header } from './header.jsx'
+import { GridContainer } from './gridcontainer.jsx'
 import { Cell } from './cell.jsx'
-import { GameDisplay, action } from './game/game-actions.js'
+import { GameStructure, action } from './game/game-actions.js'
 
 class BattleField extends React.Component {
   constructor (props) {
     super(props)
-
     this.init = this.init.bind(this)
-    this.set = this.set.bind(this)
+    this.cell = this.cell.bind(this)
+  }
 
-    this.state = {
-      gridAttr: GameDisplay.gridAttr,
+  cell(f, y, x) {
+    let v = 'p' + y + ',' + x
+    let t = 't-' + f[0][y][x][0]
+    let c = f[0][y][x][1]
+    let title = f[0][y][x][2]
+
+    if (c) {
+      t += '-' + c.short
     }
 
-    action.setSet(this.set)
+    return <Cell key={v} id={v} type={t} title={title} action={action}/>
   }
 
-  set (d) {
-    console.log('set', d)
-    this.setState(d)
-  }
-
-  init () {
+  init (f) {
     let y = 0, ry = [], x
     while (y < 100) {
       x = 0
       let rx = []
       while (x < 100) {
-        let v = 'p' + x + ',' + y
-        let t = 't-' + GameDisplay.gridAttr[0][y][x][0]
-        let c = GameDisplay.gridAttr[0][y][x][1]
-        let s = {}
-        let title = GameDisplay.gridAttr[0][y][x][2]
-        let y1, x1, y2, x2
-        if (title) {
-          y1 = title[0]
-          x1 = title[1]
-          y2 = title[2]
-          x2 = title[3]
-        }
-        if (c) {
-          t += '-' + c.short
-        }
-        else {
-          if (t === 't-2') {
-            s = {
-              backgroundColor: '#' + '666'
-            }
-          }
-        }
-        if (title){
-          rx.push(<Cell 
-            action={action}
-            key={v} id={v} type={t} style={s} title={y1 + ',' + x1 + ',' + y2 + ',' + x2}/>)
-        }
-        else {
-          rx.push(<Cell 
-            action={action}
-            key={v} id={v} type={t} style={s}/>)
-        }
+        rx.push(this.cell(f, y, x))
         x++
       }
       ry.push(rx)
       y++
     }
 
-    return ry // ????
+    return ry
   }
 
   componentWillMount () {
-    this.setState({grid: this.init()})
+    this.setState({grid: this.init(GameStructure.gridAttr)})
     document.addEventListener('keydown', action.key)
   }
 
@@ -81,13 +52,12 @@ class BattleField extends React.Component {
 
   render () {
     return (
-      <div className='container'>
+      <div className='battle-field'>
         <Header />
-        <div className='battle-field'>{this.state.grid}</div>
+        <GridContainer>{this.state.grid}</GridContainer>
       </div>
     )
   }
 }
 
 export { BattleField }
-
