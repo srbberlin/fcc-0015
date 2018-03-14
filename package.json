@@ -1,0 +1,41 @@
+{
+  "name": "fcc-0015",
+  "version": "1.0.0",
+  "description": "FreeCodeCamp: Roguelike Dungeon Crawler Game Incomplete",
+  "main": "src/js/main.jsx",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srbberlin/fcc-0015.git"
+  },
+  "author": "srbberlin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/srbberlin/fcc-0015/issues"
+  },
+  "homepage": "https://github.com/srbberlin/fcc-0015#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browser-sync": "^2.23.6",
+    "browserify": "^16.1.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}
