@@ -24,6 +24,7 @@ module.exports = {
         "plugin:react/recommended"
     ],
     "rules": {
+        "no-console":0,
         "indent": [
             "error",
             2
