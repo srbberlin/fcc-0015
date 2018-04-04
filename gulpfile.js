@@ -38,11 +38,11 @@ gulp.task('serve', ['sass', 'scripts', 'images', 'html'], function () {
   gulp.watch(config.htmlin, ['html', 'reload'])
 })
 
-gulp.task('sprites', function() {
-  return gulp.src(config.assets)
-    .pipe(svgSprite({mode: 'symbols'}))
-    .pipe(gulp.dest(config.imgout))
-})
+//gulp.task('sprites', function() {
+//  return gulp.src(config.assets)
+//    .pipe(svgSprite({mode: 'symbols'}))
+//    .pipe(gulp.dest(config.imgout))
+//})
 
 gulp.task('sass', function () {
   let path = config.cssin
