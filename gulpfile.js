@@ -1,7 +1,6 @@
 const gulp = require('gulp')
 const sass = require('gulp-sass')
 const sourcemaps = require('gulp-sourcemaps')
-//const svgSprite = require('gulp-svg-sprites')
 const browserify = require('browserify')
 const babelify = require('babelify')
 const browserSync = require('browser-sync').create()
@@ -16,7 +15,6 @@ var config = {
   jsin:    __dirname + '/src/babel/**/*.{jsx,js}',
   jsentry: __dirname + '/src/babel/main.jsx',
   imgin:   __dirname + '/src/img/**/*',
-  assets:  __dirname + '/src/assets/**/*',
   cssout:  __dirname + '/docs/css/',
   jsout:   __dirname + '/docs/js/',
   imgout:  __dirname + '/docs/img/',
@@ -37,12 +35,6 @@ gulp.task('serve', ['sass', 'scripts', 'images', 'html'], function () {
   gulp.watch(config.imgin, ['images', 'reload'])
   gulp.watch(config.htmlin, ['html', 'reload'])
 })
-
-//gulp.task('sprites', function() {
-//  return gulp.src(config.assets)
-//    .pipe(svgSprite({mode: 'symbols'}))
-//    .pipe(gulp.dest(config.imgout))
-//})
 
 gulp.task('sass', function () {
   let path = config.cssin
