@@ -73,11 +73,11 @@ class Action {
       let o = this.f[0][y1][x1][1]
       let t = this.f[0][y1][x1][2]
       this.f[0][y1][x1][1] = null
-      this.f[0][y2][x2][1] = o
       this.f[0][y1][x1][2] = null
+      this.f[0][y2][x2][1] = o
       this.f[0][y2][x2][2] = t
-      console.log('move', y1, x1, y2, x2)
-      this.set(this.f, [y1, x1, y2, x2])
+
+      this.set(this.f)
       return true
     }
     return false

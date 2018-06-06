@@ -108,13 +108,13 @@ let Pitch = {
       f[0].push([])
       f[1].push([])
       for (x = 0; x < 100; x++) {
-        f[0][y].push([t, null])
-        f[1][y].push([t, null])
+        f[0][y].push([t, null, null, `p${y},${x}`])
+        f[1][y].push([t, null, null, `p${y},${x}`])
       }
     }
 
     /*
-     * Position the combatants and welths
+     * Position the combatants, weapons and healths
      * 
      */
 
@@ -134,6 +134,7 @@ let Pitch = {
         t = d.env[1].v
         title = `healt ${hc}`
       }
+
       o.pos[0] = y
       o.pos[1] = x
       f[0][y][x][0] = t
@@ -146,7 +147,7 @@ let Pitch = {
     } while (hc < hcMax)
 
     /*
-     * Provide the rooms of the combatants
+     * Provide the rooms for the combatants, weapons and healths
      * 
      */
 

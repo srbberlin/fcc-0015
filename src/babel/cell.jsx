@@ -7,8 +7,6 @@ class Cell extends React.Component {
   }
 
   render () {
-    if (this.props.flag !== undefined)
-      console.log('Cell render:', this.props.id)
     return (
       <div
         id={this.props.id}

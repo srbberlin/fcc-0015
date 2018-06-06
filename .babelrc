@@ -1,4 +1,9 @@
 {
   "presets": ["react", "env"],
+  "env": {
+    "production": {
+      "presets": ["minify"]
+    }
+  },
   "plugins": ["transform-react-jsx"]
 }

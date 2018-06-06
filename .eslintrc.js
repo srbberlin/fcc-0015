@@ -1,4 +1,10 @@
 module.exports = {
+    "parserOptions": { 
+        "sourceType": "module",
+        "ecmaFeatures": {
+            jsx: true
+        }
+    },
     "env": {
         "browser": true,
         "commonjs": true,
@@ -32,4 +38,4 @@ module.exports = {
             "never"
         ]
     }
-};
+}

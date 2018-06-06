@@ -8,51 +8,42 @@ class GridContainer extends React.Component {
 
     this.state = {}
 
-    this.clone = this.clone.bind(this)
+    this.clone = this.cloneProps.bind(this)
     this.set = this.set.bind(this)
     this.doRender = this.doRender.bind(this)
 
     action.setSet(this.set)
   }
 
-  clone(f, y, x) {
-    let v = 'p' + y + ',' + x
-    let t = 't-' + f[0][y][x][0]
-    let c = f[0][y][x][1]
-    let title = f[0][y][x][2]
-
-    if (c) {
-      t += '-' + c.short
-    }
-
-    return { key: v, type: t, title: title, flag: 1}
+  cloneProps(o, e) {
+    let r = { type: `t-2-${o.short}`, title: e[2], flag: 1}
+    return r
   }
 
-  set (f, [y1, x1, y2, x2]) {
-    console.log('set', y1, x1, y2, x2)
-
+  set (f) {
     this.setState({
-      'gridAttr': f,
-      '1': this.clone(f, y1, x1),
-      '2': this.clone(f, y2, x2)
+      'f': f,
     })
   }
 
   doRender (child) {
 
-    if (this.state['1']) {
-      if (this.state['1'].key === child.key) {
-        return React.cloneElement(child, this.state['1'])
-      }
-      if (this.state['2'].key === child.key) {
-        return React.cloneElement(child, this.state['2'])
+    if (this.state['f']) {
+      let [y,x] = child.props.id.substring(1).split(',')
+      let e = this.state.f[0][Number.parseInt(y)][Number.parseInt(x)]
+      let o = e[1]
+      if (o) {
+        return React.cloneElement(child, this.cloneProps(o, e))
       }
     }
     return child
   }
 
+  componentWillMount () {
+    this.set(this.props.f)
+  }
+
   render () {
-    //React.Children.forEach(this.props.children, child => this.doRender(child))
     return (
       <div className='grid-container'>
         { React.Children.map(this.props.children, child => this.doRender(child)) }

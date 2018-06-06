@@ -15,14 +15,8 @@ class BattleField extends React.Component {
   cell(f, y, x) {
     let v = 'p' + y + ',' + x
     let t = 't-' + f[0][y][x][0]
-    let c = f[0][y][x][1]
-    let title = f[0][y][x][2]
 
-    if (c) {
-      t += '-' + c.short
-    }
-
-    return <Cell key={v} id={v} type={t} title={title} action={action}/>
+    return <Cell key={v} id={v} type={t} action={action}/>
   }
 
   init (f) {
@@ -51,10 +45,11 @@ class BattleField extends React.Component {
   }      
 
   render () {
+    console.log('BattleField: render')
     return (
       <div className='battle-field'>
         <Header />
-        <GridContainer>{this.state.grid}</GridContainer>
+        <GridContainer f={GameStructure.gridAttr}>{this.state.grid}</GridContainer>
       </div>
     )
   }
