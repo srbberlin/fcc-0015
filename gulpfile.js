@@ -1,5 +1,4 @@
 const gulp = require('gulp')
-const runSeq = require('run-sequence')
 const sass = require('gulp-sass')
 const obfuscator = require('gulp-js-obfuscator')
 const sourcemaps = require('gulp-sourcemaps')
@@ -23,11 +22,11 @@ var config = {
   htmlout: __dirname + '/docs'
 }
 
-gulp.task('reload', function () {
+function reload () {
   browserSync.reload()
-})
+}
 
-gulp.task('serve', ['sass', 'scripts', 'images', 'html'], function () {
+function serve () {
   browserSync.init({
     server: config.htmlout
   })
@@ -36,18 +35,18 @@ gulp.task('serve', ['sass', 'scripts', 'images', 'html'], function () {
   gulp.watch(config.cssin, () => runSeq(['sass', 'reload']))
   gulp.watch(config.imgin, () => runSeq(['images', 'reload']))
   gulp.watch(config.htmlin, () => runSeq(['html', 'reload']))
-})
+}
 
-gulp.task('sass', function () {
+function css () {
   let path = config.cssin
   return gulp.src(path)
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.cssout))
-})
+}
 
-gulp.task('scripts', function () {
+function scripts () {
   return browserify({
     entries: config.jsentry,
     extensions: ['.js', '.jsx'],
@@ -57,21 +56,21 @@ gulp.task('scripts', function () {
     .pipe(source('index.js'))
     .pipe(gulp.dest(config.jsout))
     //.pipe(obfuscator())
-})
+}
 
-gulp.task('images', function () {
+function images () {
   let path = config.imgin
   return gulp.src(path)
     .pipe(gulp.dest(config.imgout))
-})
+}
 
-gulp.task('html', function () {
+function html () {
   let path = config.htmlin
   return gulp.src(path)
     .pipe(gulp.dest(config.htmlout))
-})
+}
 
-gulp.task('clean', function () {
+function clean () {
   let paths = [
     config.jsout + '/**/*.js',
     config.cssout + '/**/*.css',
@@ -84,9 +83,9 @@ gulp.task('clean', function () {
   }).catch(function () {
   })
   return res
-})
+}
 
-gulp.task('build', ['scripts', 'sass', 'html', 'images'])
+exports.build = gulp.parallel(scripts, css, html, images)
 
-gulp.task('default', ['serve'])
+exports.default = serve
 
