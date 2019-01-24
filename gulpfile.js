@@ -19,27 +19,19 @@ var config = {
   cssout:  __dirname + '/docs/css/',
   jsout:   __dirname + '/docs/js/',
   imgout:  __dirname + '/docs/img/',
-  htmlout: __dirname + '/docs'
+  htmlout: __dirname + '/docs/'
+}
+
+function clean () {
+  return del([config.htmlout + '*'])
 }
 
 function reload () {
   browserSync.reload()
 }
 
-function serve () {
-  browserSync.init({
-    server: config.htmlout
-  })
-
-  gulp.watch(config.jsin, () => runSeq(['scripts', 'reload']))
-  gulp.watch(config.cssin, () => runSeq(['sass', 'reload']))
-  gulp.watch(config.imgin, () => runSeq(['images', 'reload']))
-  gulp.watch(config.htmlin, () => runSeq(['html', 'reload']))
-}
-
 function css () {
-  let path = config.cssin
-  return gulp.src(path)
+  return gulp.src(config.cssin)
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(sourcemaps.write())
@@ -50,7 +42,8 @@ function scripts () {
   return browserify({
     entries: config.jsentry,
     extensions: ['.js', '.jsx'],
-    debug: true})
+    debug: true
+  })
     .transform(babelify)
     .bundle()
     .pipe(source('index.js'))
@@ -59,33 +52,32 @@ function scripts () {
 }
 
 function images () {
-  let path = config.imgin
-  return gulp.src(path)
+  return gulp
+    .src(config.imgin)
     .pipe(gulp.dest(config.imgout))
 }
 
 function html () {
-  let path = config.htmlin
-  return gulp.src(path)
+  return gulp
+    .src(config.htmlin)
     .pipe(gulp.dest(config.htmlout))
 }
 
-function clean () {
-  let paths = [
-    config.jsout + '/**/*.js',
-    config.cssout + '/**/*.css',
-    config.imgout + '/**/*',
-    config.htmlout + '/**/*.html'
-  ]
-  let res
-  res = del(paths)
-  res.then(function () {
-  }).catch(function () {
+function serve () {
+  browserSync.init({
+    server: config.htmlout
   })
-  return res
+
+  gulp.watch(config.jsin, () => gulp.series(scripts, reload))
+  gulp.watch(config.cssin, () => gulp.series(css, reload))
+  gulp.watch(config.imgin, () => gulp.series(images, reload))
+  gulp.watch(config.htmlin, () => gulp.series(html, reload))
 }
 
-exports.build = gulp.parallel(scripts, css, html, images)
+function build (cb) {
+  gulp.series(clean, gulp.parallel(html, images, scripts, css))(cb)
+}
 
-exports.default = serve
-
+exports.build = build
+exports.clean = clean
+exports.default = gulp.series(build, serve)
