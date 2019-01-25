@@ -26,8 +26,9 @@ function clean () {
   return del([config.htmlout + '*'])
 }
 
-function reload () {
+function reload (cb) {
   browserSync.reload()
+  cb()
 }
 
 function css () {
